@@ -55,7 +55,7 @@
     <div id="timer"></div>
   </div>
 
-  <h2 style="text-align:center;">OMR Answer Sheet (1–100)</h2>
+  <h2 style="text-align:center;">OMR Answer Sheet</h2>
   <div class="omr-grid" id="omrGrid">
     <!-- JavaScript generates bubbles here -->
   </div>
@@ -63,18 +63,18 @@
   <script>
     const grid = document.getElementById("omrGrid");
 
-    for (let col = 0; col < 4; col++) {
+    for (let col = 1; col <= 4; col++) {
       const column = document.createElement("div");
       column.className = "column";
 
       for (let row = 1; row <= 25; row++) {
-        const qNum = col * 25 + row;
+        const qId = `col${col}-q${row}`; // Unique identifier for internal use
         const rowDiv = document.createElement("div");
         rowDiv.className = "row";
 
         const number = document.createElement("div");
         number.className = "number";
-        number.textContent = qNum;
+        number.textContent = row; // Always 1–25 in each column
 
         const bubbles = document.createElement("div");
         bubbles.className = "bubbles";
@@ -82,11 +82,11 @@
         ['A', 'B', 'C', 'D'].forEach(option => {
           const bubble = document.createElement("div");
           bubble.className = "bubble";
-          bubble.dataset.question = qNum;
+          bubble.dataset.question = qId;
           bubble.dataset.option = option;
 
           bubble.addEventListener("click", () => {
-            document.querySelectorAll(`.bubble[data-question='${qNum}']`)
+            document.querySelectorAll(`.bubble[data-question='${qId}']`)
               .forEach(b => b.classList.remove("selected"));
             bubble.classList.add("selected");
           });
